@@ -2,8 +2,8 @@
 
 Project created in VS Code terminal: 
 	creating command in line: 	
-		dotnet new web --name UserService --framework netcoreapp2.0
-		dotnet new classlib --name UserServiceTests --framework netcoreapp2.0
+		dotnet new web --name FinancesApi --framework netcoreapp2.0
+		dotnet new classlib --name FinancesApiTests --framework netcoreapp2.0
 	
 	nuget add packages command in line:
 		dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
