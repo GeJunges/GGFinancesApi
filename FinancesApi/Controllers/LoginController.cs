@@ -1,7 +1,19 @@
+using FinancesApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinancesApi.Controllers {
-    public class LoginController : ControllerBase {
+    [Route("api/register")]
+    public class RegisterController : ControllerBase {
+        private IUserRepository _repository;
 
+        public RegisterController(IUserRepository repository) {
+            _repository = repository;
+        }
+
+        [HttpGet]
+        public IActionResult Get() {
+
+            return new JsonResult("2");
+        }
     }
 }
