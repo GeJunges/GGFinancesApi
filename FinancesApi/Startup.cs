@@ -3,6 +3,7 @@ using System.Reflection;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
+using FinancesApi.DI;
 using FinancesApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -25,7 +26,7 @@ namespace FinancesApi {
         public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
-                options.Authority =  Configuration["FireBaseConfigurations:Url"];
+                options.Authority = Configuration["FireBaseConfigurations:Url"];
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -64,12 +65,7 @@ namespace FinancesApi {
 
         private static IServiceProvider SetDependencyInjectionConfigurations(IServiceCollection services) {
             var container = new WindsorContainer();
-            container.Register(
-                Classes.FromAssemblyInThisApplication(Assembly.GetExecutingAssembly())
-                .Pick()
-                .WithServiceDefaultInterfaces()
-                .LifestyleTransient()
-            );
+            container.Install(new InstallFindancesApi());
 
             return WindsorRegistrationHelper.CreateServiceProvider(container, services);
         }

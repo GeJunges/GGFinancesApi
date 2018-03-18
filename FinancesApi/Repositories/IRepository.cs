@@ -1,7 +1,7 @@
 using FinancesApi.Entities;
 
 namespace FinancesApi.Repositories {
-    public class UserRepository : IUserRepository, IRepository<User> {
+    public interface IRepository<T> where T : IEntity {
 
     }
 }

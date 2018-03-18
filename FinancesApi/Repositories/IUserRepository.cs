@@ -1,5 +1,5 @@
-namespace FinancesApi.Repositories{
-    public interface IUserRepository{
-        
+namespace FinancesApi.Repositories {
+    public interface IUserRepository {
+
     }
 }

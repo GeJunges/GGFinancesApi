@@ -13,6 +13,7 @@ namespace FinancesApi.Controllers {
         [HttpGet]
         public IActionResult Get() {
 
+BadRequest();
             return new JsonResult("2");
         }
     }
