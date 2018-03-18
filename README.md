@@ -1,6 +1,7 @@
 /****IN CONSTRUCTION****/
 
 Project created in VS Code terminal: 
+
 	creating command in line: 	
 		dotnet new web --name FinancesApi --framework netcoreapp2.0
 		dotnet new classlib --name FinancesApiTests --framework netcoreapp2.0
@@ -31,3 +32,8 @@ Project created in VS Code terminal:
 
 	delete database:
 		dotnet ef database drop
+
+/**Documentation**/		
+
+  Instantiate ComparatorOfObjects:
+	private static readonly ComparatorOfObjects<ValidateModelAttribute, ValidateModelAttribute> Comparator = ComparatorOfObjects.Create<ValidateModelAttribute>();

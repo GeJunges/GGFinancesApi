@@ -4,10 +4,12 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
 using FinancesApi.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 
 namespace FinancesApi {
@@ -21,18 +23,18 @@ namespace FinancesApi {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services) {
-            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            // .AddJwtBearer(options => {
-            //     options.Authority = "https://securetoken.google.com/ggfinancehomolog";
-            //     options.TokenValidationParameters = new TokenValidationParameters
-            //     {
-            //         ValidateIssuer = true,
-            //         ValidIssuer = "https://securetoken.google.com/ggfinancehomolog",
-            //         ValidateAudience = true,
-            //         ValidAudience = "ggfinancehomolog",
-            //         ValidateLifetime = true
-            //     };
-            // });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.Authority =  Configuration["FireBaseConfigurations:Url"];
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["FireBaseConfigurations:Url"],
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["FireBaseConfigurations:ProjectId"],
+                    ValidateLifetime = true
+                };
+            });
 
             services.AddMvc(options => {
                 options.Filters.Add(new ValidateModelAttribute());
