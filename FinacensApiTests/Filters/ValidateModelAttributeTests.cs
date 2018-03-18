@@ -1,4 +1,5 @@
 using FinancesApi.Filters;
+using FinancesApiTests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -17,7 +18,7 @@ namespace FinancesApiTests.Filters {
         private HttpContext _httpContext;
         private ActionExecutingContext _actionContextMock;
         private ValidateModelAttribute _validateModelAttribute;
-
+        
         [SetUp]
         public void SetUp() {
             _httpContext = new DefaultHttpContext();
