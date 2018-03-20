@@ -4,7 +4,6 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
 using FinancesApi.DI;
-using FinancesApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using FinancesApi.Security;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using FinancesApi.Filters;
 
 namespace FinancesApi {
     public class Startup {
@@ -38,6 +41,7 @@ namespace FinancesApi {
             });
 
             services.AddMvc(options => {
+                options.Filters.Add(new ExceptionFilter());
                 options.Filters.Add(new ValidateModelAttribute());
             })
             .AddJsonOptions(options => {
@@ -50,7 +54,6 @@ namespace FinancesApi {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             app.UseAuthentication();
-
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
