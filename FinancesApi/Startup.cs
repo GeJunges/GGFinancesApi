@@ -15,6 +15,7 @@ using FinancesApi.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using FinancesApi.Filters;
+using FinancesApi.AutoMapper;
 
 namespace FinancesApi {
     public class Startup {
@@ -22,6 +23,7 @@ namespace FinancesApi {
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
+            AutoMapperConfiguration.RegisterMappings();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -47,7 +49,7 @@ namespace FinancesApi {
             .AddJsonOptions(options => {
                 SetJsonConfigurations(options);
             });
-
+            
             return SetDependencyInjectionConfigurations(services);
         }
 
