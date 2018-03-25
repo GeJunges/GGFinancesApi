@@ -8,7 +8,7 @@ namespace FinancesApi.Filters {
     public class ExceptionFilter : ExceptionFilterAttribute {
 
         public override void OnException(ExceptionContext context) {
-            if (context.HttpContext.Request.GetTypedHeaders().Accept.Any(header => header.MediaType == "application/json")) {
+            if (context.Exception != null) {
                 var jsonResult = new JsonResult(new { error = context.Exception.Message });
                 jsonResult.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 context.Result = jsonResult;
