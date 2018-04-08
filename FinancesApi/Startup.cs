@@ -18,6 +18,8 @@ using FinancesApi.Filters;
 using FinancesApi.AutoMapper;
 using AutoMapper;
 using FinancesApi.Middlewares;
+using FinancesApi.Configirations;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinancesApi {
     public class Startup {
@@ -25,13 +27,13 @@ namespace FinancesApi {
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
-            AutoMapperConfiguration.RegisterMappings();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddAutoMapper();
+            services.AddDbContext<AppDbContext>(opt=>opt.UseNpgsql(Configuration.GetConnectionString("Development")));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
@@ -60,6 +62,7 @@ namespace FinancesApi {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             app.UseAuthentication();
+
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
