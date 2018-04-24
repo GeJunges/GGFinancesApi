@@ -1,25 +1,20 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FinancesApi.Strategy;
+using FinancesApi.Entities;
 
 namespace FinancesApi.Controllers {
 
     [Route("api/Calculator")]
     public class CalculatorController : ControllerBase {
-
-        private readonly IAveragingMethod _averagingMethod;
-        public CalculatorController(IAveragingMethod averagingMethod) {
-            _averagingMethod = averagingMethod;
+      
+        public CalculatorController() {
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody]TypeOfCalc type) {
-            var values = new List<int> { 9, 8, 7 };
-            var strategy = new CalculatorFactory().Create(type);
-            var result = strategy.AverageFor(values);
+        [HttpGet("{type}")]
+        public async Task<IActionResult> Get() {
 
-            return new JsonResult(result);
+            return Ok();
         }
     }
 }

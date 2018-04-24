@@ -1,16 +1,13 @@
 using FinancesApi.Filters;
-using FinancesApiTests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
-using System.Web;
 
 namespace FinancesApiTests.Filters {
     public class ValidateModelAttributeTests {
@@ -49,8 +46,8 @@ namespace FinancesApiTests.Filters {
 
             _validateModelAttribute.OnActionExecuting(_actionContextMock);
             
-            var actual = ((ObjectResult)_actionContextMock.Result);
-            Assert.AreEqual((int)HttpStatusCode.BadRequest, actual.StatusCode);
+            var actual = ((JsonResult)_actionContextMock.Result);
+            Assert.AreEqual((int)HttpStatusCode.InternalServerError, actual.StatusCode);
         }
     }
 }

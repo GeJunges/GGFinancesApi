@@ -1,10 +1,11 @@
+
+
 /****IN CONSTRUCTION****/
 
 Project created in VS Code terminal: 
-
 	creating command in line: 	
-		dotnet new web --name FinancesApi --framework netcoreapp2.0
-		dotnet new classlib --name FinancesApiTests --framework netcoreapp2.0
+		dotnet new webapi --name UserService --framework netcoreapp1.1
+		dotnet new classlib --name UserServiceTests --framework netcoreapp1.1
 	
 	nuget add packages command in line:
 		dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
@@ -16,7 +17,7 @@ Project created in VS Code terminal:
 		dotnet build
 		
 	add project references command in line:
-		dotnet add reference ../FinancesApi/FinancesApi.csproj
+		dotnet add reference ../UserService/UserService.csproj
 
 	run project command in line:
 		dotnet run
@@ -32,8 +33,3 @@ Project created in VS Code terminal:
 
 	delete database:
 		dotnet ef database drop
-
-/**Documentation**/		
-
-  Instantiate ComparatorOfObjects:
-	private static readonly ComparatorOfObjects<ValidateModelAttribute, ValidateModelAttribute> Comparator = ComparatorOfObjects.Create<ValidateModelAttribute>();

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
 using FinancesApi.DI;
@@ -11,13 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using FinancesApi.Security;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using FinancesApi.Filters;
-using FinancesApi.AutoMapper;
 using AutoMapper;
-using FinancesApi.Middlewares;
 using FinancesApi.Configirations;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,15 +26,17 @@ namespace FinancesApi {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddAutoMapper();
-            services.AddDbContext<AppDbContext>(opt=>opt.UseNpgsql(Configuration.GetConnectionString("Development")));
+            services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("Development")));
+
+            var url = Configuration["FireBaseConfigurations:Url"];
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
-                options.Authority = Configuration["FireBaseConfigurations:Url"];
+                options.Authority = url;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = Configuration["FireBaseConfigurations:Url"],
+                    ValidIssuer = url,
                     ValidateAudience = true,
                     ValidAudience = Configuration["FireBaseConfigurations:ProjectId"],
                     ValidateLifetime = true
@@ -67,8 +62,6 @@ namespace FinancesApi {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStatusCodePagesMiddleware();
-            
             app.UseMvc();
         }
 

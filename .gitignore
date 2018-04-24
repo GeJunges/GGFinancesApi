@@ -1,7 +1,5 @@
-
 node_modules
 .vs/
-.vscode
 
 #project.json files
 project.json.old
