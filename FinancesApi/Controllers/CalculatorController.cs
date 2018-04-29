@@ -7,7 +7,7 @@ namespace FinancesApi.Controllers {
 
     [Route("api/Calculator")]
     public class CalculatorController : ControllerBase {
-      
+
         public CalculatorController() {
         }
 

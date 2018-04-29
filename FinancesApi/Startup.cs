@@ -26,7 +26,7 @@ namespace FinancesApi {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddAutoMapper();
-            services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("Development")));
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Development")));
 
             var url = Configuration["FireBaseConfigurations:Url"];
 
