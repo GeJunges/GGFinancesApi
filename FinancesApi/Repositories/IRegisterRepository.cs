@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FinancesApi.Entities;
 
 namespace FinancesApi.Repositories {
-    public interface IDetailsRepository {
-        Task<ICollection<Detail>> Find();
+    public interface IRegisterRepository {
+        Task<ICollection<Register>> Find(Budget budget);
     }
 }

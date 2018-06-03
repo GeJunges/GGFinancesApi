@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FinancesApi.Entities {
 
-    public class Expense : IEntity {
+    public class Register : IEntity {
 
         public Guid Id { get; set; }
         public Budget Budget { get; set; }

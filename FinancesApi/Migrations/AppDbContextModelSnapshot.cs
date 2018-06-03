@@ -36,25 +36,6 @@ namespace FinancesApi.Migrations
                     b.ToTable("Details");
                 });
 
-            modelBuilder.Entity("FinancesApi.Entities.Expense", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Budget");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name", "Budget")
-                        .IsUnique();
-
-                    b.ToTable("Expenses");
-                });
-
             modelBuilder.Entity("FinancesApi.Entities.ExpenseDate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -62,11 +43,11 @@ namespace FinancesApi.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<Guid>("ExpenseId");
+                    b.Property<Guid>("RegisterId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExpenseId", "Date")
+                    b.HasIndex("RegisterId", "Date")
                         .IsUnique();
 
                     b.ToTable("ExpensesDate");
@@ -95,11 +76,49 @@ namespace FinancesApi.Migrations
                     b.ToTable("ExpensesDetails");
                 });
 
+            modelBuilder.Entity("FinancesApi.Entities.IncomeDate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<Guid>("RegisterId");
+
+                    b.Property<double?>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterId", "Date")
+                        .IsUnique();
+
+                    b.ToTable("EntriesDate");
+                });
+
+            modelBuilder.Entity("FinancesApi.Entities.Register", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Budget");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name", "Budget")
+                        .IsUnique();
+
+                    b.ToTable("Registers");
+                });
+
             modelBuilder.Entity("FinancesApi.Entities.ExpenseDate", b =>
                 {
-                    b.HasOne("FinancesApi.Entities.Expense", "Expense")
+                    b.HasOne("FinancesApi.Entities.Register", "Register")
                         .WithMany()
-                        .HasForeignKey("ExpenseId")
+                        .HasForeignKey("RegisterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -113,6 +132,14 @@ namespace FinancesApi.Migrations
                     b.HasOne("FinancesApi.Entities.ExpenseDate")
                         .WithMany("ExpenseDetails")
                         .HasForeignKey("ExpenseDateId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FinancesApi.Entities.IncomeDate", b =>
+                {
+                    b.HasOne("FinancesApi.Entities.Register", "Register")
+                        .WithMany()
+                        .HasForeignKey("RegisterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

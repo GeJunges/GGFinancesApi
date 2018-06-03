@@ -6,6 +6,7 @@ namespace FinancesApi.Entities {
     public class ExpenseDetails : IEntity {
 
         public Guid Id { get; set; }
+        [Required]
         [ForeignKey("ExpenseDateId")]
         public Guid ExpenseDateId { get; set; }
         [Required]

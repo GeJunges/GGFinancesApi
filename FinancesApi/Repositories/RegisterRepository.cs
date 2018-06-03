@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FinancesApi.Configirations;
 using FinancesApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancesApi.Repositories {
-    public class DetailsRepository : IDetailsRepository {
+    public class RegisterRepository : IRegisterRepository {
 
         private readonly AppDbContext _context;
 
-        public DetailsRepository(AppDbContext context) {
+        public RegisterRepository(AppDbContext context) {
             _context = context;
         }
 
-        public async Task<ICollection<Detail>> Find() {
-            return await _context.Details.ToListAsync();
+        public async Task<ICollection<Register>> Find(Budget budget) {
+            return await _context.Registers.Where(e => e.Budget == budget).ToListAsync();
         }
     }
 }

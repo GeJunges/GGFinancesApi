@@ -21,7 +21,7 @@ namespace FinancesApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
+                name: "Registers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -30,7 +30,27 @@ namespace FinancesApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.PrimaryKey("PK_Registers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EntriesDate",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    RegisterId = table.Column<Guid>(nullable: false),
+                    Value = table.Column<double>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntriesDate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntriesDate_Registers_RegisterId",
+                        column: x => x.RegisterId,
+                        principalTable: "Registers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,16 +58,16 @@ namespace FinancesApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ExpenseId = table.Column<Guid>(nullable: false),
+                    RegisterId = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExpensesDate", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExpensesDate_Expenses_ExpenseId",
-                        column: x => x.ExpenseId,
-                        principalTable: "Expenses",
+                        name: "FK_ExpensesDate_Registers_RegisterId",
+                        column: x => x.RegisterId,
+                        principalTable: "Registers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -86,15 +106,15 @@ namespace FinancesApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_Name_Budget",
-                table: "Expenses",
-                columns: new[] { "Name", "Budget" },
+                name: "IX_EntriesDate_RegisterId_Date",
+                table: "EntriesDate",
+                columns: new[] { "RegisterId", "Date" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExpensesDate_ExpenseId_Date",
+                name: "IX_ExpensesDate_RegisterId_Date",
                 table: "ExpensesDate",
-                columns: new[] { "ExpenseId", "Date" },
+                columns: new[] { "RegisterId", "Date" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -107,10 +127,19 @@ namespace FinancesApi.Migrations
                 table: "ExpensesDetails",
                 columns: new[] { "ExpenseDateId", "DetailId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registers_Name_Budget",
+                table: "Registers",
+                columns: new[] { "Name", "Budget" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "EntriesDate");
+
             migrationBuilder.DropTable(
                 name: "ExpensesDetails");
 
@@ -121,7 +150,7 @@ namespace FinancesApi.Migrations
                 name: "ExpensesDate");
 
             migrationBuilder.DropTable(
-                name: "Expenses");
+                name: "Registers");
         }
     }
 }

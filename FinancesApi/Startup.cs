@@ -72,7 +72,7 @@ namespace FinancesApi {
 
         private static IServiceProvider SetDependencyInjectionConfigurations(IServiceCollection services) {
             var container = new WindsorContainer();
-            container.Install(new InstallFindancesApi());
+            container.Install(new InstallFinancesApi());
 
             return WindsorRegistrationHelper.CreateServiceProvider(container, services);
         }
