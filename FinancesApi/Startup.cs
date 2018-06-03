@@ -17,16 +17,27 @@ using Microsoft.EntityFrameworkCore;
 namespace FinancesApi {
     public class Startup {
         public IConfiguration Configuration { get; }
+           public IHostingEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration, IHostingEnvironment env) {
             Configuration = configuration;
+            Environment = env;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddAutoMapper();
-            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Development")));
+            var connectionString = string.Empty;
+
+            if (Environment.IsDevelopment()) {
+                connectionString = Configuration.GetConnectionString("Development");
+            }
+            if (Environment.IsProduction()) {
+                connectionString = Configuration.GetConnectionString("Production");
+            }
+
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
 
             var url = Configuration["FireBaseConfigurations:Url"];
 
