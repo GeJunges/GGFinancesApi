@@ -17,4 +17,4 @@ jobs:
           command: dotnet build
       - run:
           name: Run tests 
-          command: dotnet test
+          command: dotnet test /src
