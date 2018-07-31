@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /temp
+    working_directory: /src
     docker:
       - image: microsoft/dotnet:sdk
     environment:
@@ -9,7 +9,12 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
     steps:
       - checkout
-      - run: find .
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test /FinacensApiTests/bin/Debug/netcoreapp2.0/FinancesApiTests.dll
+      - run:
+          name: Restore solution
+          command: dotnet restore src/
+      - run:
+          name: Build solution
+          command: dotnet build src/
+      - run:
+          name: Run tests 
+          command: dotnet test
