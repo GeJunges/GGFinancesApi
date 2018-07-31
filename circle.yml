@@ -12,4 +12,6 @@ jobs:
       - run: find .
       - run: dotnet restore
       - run: dotnet build
-      - run: dotnet test --no-build Seedwork.Test
+    test:
+      override:
+        - run: dotnet test /temp/FinacensApiTests/bin/Debug/netcoreapp2.0/FinancesApiTests.dll
