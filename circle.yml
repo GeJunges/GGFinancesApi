@@ -11,10 +11,10 @@ jobs:
       - checkout
       - run:
           name: Restore solution
-          command: dotnet restore src/
+          command: dotnet restore
       - run:
           name: Build solution
-          command: dotnet build src/
+          command: dotnet build
       - run:
           name: Run tests 
           command: dotnet test
