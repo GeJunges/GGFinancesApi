@@ -11,6 +11,4 @@ jobs:
       - checkout
       - run: dotnet restore
       - run: dotnet build
-    test:
-      override:
-        - dotnet test
+      - run: dotnet test
