@@ -12,6 +12,4 @@ jobs:
       - run: find .
       - run: dotnet restore
       - run: dotnet build
-    test:
-      override:
-        - run: dotnet test /temp/FinacensApiTests/bin/Debug/netcoreapp2.0/FinancesApiTests.dll
+      - run: dotnet test /temp/FinacensApiTests/bin/Debug/netcoreapp2.0/FinancesApiTests.dll
